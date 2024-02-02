@@ -1,17 +1,24 @@
 package hu.andika.javaee.model.comment;
 
 public class Comment {
-    private int id;
+    private Integer id;
     private String content;
-    private int userId;
-    private int pointOfInterestId;
+    private Integer userId;
+    private Integer pointOfInterestId;
     private boolean isAuthorized;
 
     public Comment() {
         this.isAuthorized = false;
     }
 
-    public Comment(int id, String content, int userId, int pointOfInterestId, boolean isAuthorized) {
+    public Comment(String content, Integer userId, Integer pointOfInterestId, boolean isAuthorized) {
+        this.content = content;
+        this.userId = userId;
+        this.pointOfInterestId = pointOfInterestId;
+        this.isAuthorized = isAuthorized;
+    }
+
+    public Comment(Integer id, String content, Integer userId, Integer pointOfInterestId, boolean isAuthorized) {
         this.id = id;
         this.content = content;
         this.userId = userId;
@@ -19,11 +26,11 @@ public class Comment {
         this.isAuthorized = isAuthorized;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -35,19 +42,19 @@ public class Comment {
         this.content = content;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getPointOfInterestId() {
+    public Integer getPointOfInterestId() {
         return pointOfInterestId;
     }
 
-    public void setPointOfInterestId(int pointOfInterestId) {
+    public void setPointOfInterestId(Integer pointOfInterestId) {
         this.pointOfInterestId = pointOfInterestId;
     }
 
@@ -85,7 +92,7 @@ public class Comment {
 
     @Override
     public int hashCode() {
-        int result = id;
+        Integer result = id;
         result = 31 * result + content.hashCode();
         result = 31 * result + userId;
         result = 31 * result + pointOfInterestId;

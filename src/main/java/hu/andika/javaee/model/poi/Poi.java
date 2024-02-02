@@ -1,25 +1,32 @@
 package hu.andika.javaee.model.poi;
 
-public class PointOfInterest {
-    private int id;
+public class Poi {
+    private Integer id;
     private String name;
     private String location;
     private String type;
     private int likes;
 
-    public PointOfInterest() {
-        this.likes = 0;
+    public Poi() {
+
     }
 
-    public PointOfInterest(int id, String name, String location, String type) {
+    public Poi(String name, String location, String type, int likes) {
+        this.name = name;
+        this.location = location;
+        this.type = type;
+        this.likes = likes;
+    }
+
+    public Poi(Integer id, String name, String location, String type, Integer likes) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.type = type;
-        this.likes = 0;
+        this.likes = likes;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -74,7 +81,7 @@ public class PointOfInterest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PointOfInterest that = (PointOfInterest) o;
+        Poi that = (Poi) o;
 
         if (id != that.id) return false;
         if (!name.equals(that.name)) return false;
