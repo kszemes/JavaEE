@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PointsOfInterests" uuid="ffd91e8f-d9ed-4aac-bdd8-aad3c7fbc9d0">
+    <data-source source="LOCAL" name="pois.db" uuid="0861575f-2dc1-4335-9af5-9afb748340eb">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>

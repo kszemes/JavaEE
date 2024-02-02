@@ -7,6 +7,15 @@ public class User {
     private String password;
     private Role role;
 
+    public User() {
+    }
+
+    public User(String userName, String password, Role role) {
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
+    }
+
     public User(Integer id, String userName, String password, Role role) {
         this.id = id;
         this.userName = userName;
