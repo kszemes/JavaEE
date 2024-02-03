@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 	<jsp:include page="/fragments/page_head.jsp">
@@ -26,9 +26,9 @@
 	<form action="login" method="post" style="max-width: 400px; margin: 0 auto;">
 		<div class="border border-secondary rounded p-3">
 			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">Email:</label>
+				<label class="col-sm-4 col-form-label">Username:</label>
 				<div class="col-sm-8">
-					<input type="email" name="email" class="form-control" required minlength="5" maxlength="64">
+					<input type="text" name="userName" class="form-control" required minlength="5" maxlength="64">
 				</div>
 			</div>
 			<div class="form-group row">

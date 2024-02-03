@@ -16,7 +16,10 @@ public class DatabaseInit {
         Logger logger = LogManager.getLogger();
         try {
             Class.forName("org.sqlite.JDBC");
-            String sqliteUrl = "jdbc:sqlite:src/main/webapp/pois.db";
+            ClassLoader classLoader = getClass().getClassLoader();
+            String resourcePath = "pois.db";
+            java.net.URL resourceUrl = classLoader.getResource(resourcePath);
+            String sqliteUrl = "jdbc:sqlite:" + resourceUrl.getFile();
             this.connection = DriverManager.getConnection(sqliteUrl);
             logger.info("Database Connection Successfull!");
         } catch (SQLException e) {
