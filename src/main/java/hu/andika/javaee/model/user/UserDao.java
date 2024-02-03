@@ -140,4 +140,12 @@ public class UserDao {
             logger.catching(Level.ERROR, e);
         }
     }
+
+    public Optional<User> findByUserName(String userName){
+        return null;
+    }
+
+    public Optional<User> checkLogin(String userName, String password) {
+        return null;
+    }
 }
