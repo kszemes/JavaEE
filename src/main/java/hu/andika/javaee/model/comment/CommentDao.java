@@ -106,6 +106,32 @@ public class CommentDao {
         return comments;
     }
 
+        public List<Comment> readAllByUserId(Integer userId) {
+        List<Comment> comments = null;
+        try (PreparedStatement pst = getConnection().prepareStatement("SELECT * FROM comment where userId = ?")) {
+            pst.setInt(1, userId);
+            comments = new ArrayList<>();
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                comments.add(
+                    new Comment(
+                        resultSet.getInt("id"),
+                        resultSet.getString("content"),
+                        resultSet.getInt("userId"),
+                        resultSet.getInt("pointOfInterestId"),
+                        Boolean.parseBoolean(resultSet.getString("isAuthorized"))
+                    )
+                );
+                System.out.println(resultSet.getString("content"));
+            }
+            logger.info("Found " + comments.size() + " Comments from database");
+            return comments;
+        } catch (Exception e) {
+            logger.error("There is no Comments in the table with userID: " + userId);
+        }
+        return comments;
+    }
+
     public Comment update(Comment comment) {
         try (PreparedStatement pst = getConnection().prepareStatement(
                 String.format("%s content = ?, userId = ?, pointOfInterestId = ?, isAuthorized = ? WHERE id = ?", this.update),

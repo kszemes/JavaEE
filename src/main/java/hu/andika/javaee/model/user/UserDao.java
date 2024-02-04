@@ -142,11 +142,18 @@ public class UserDao {
     }
 
     public Optional<User> findByUserName(String userName){
-        return null;
+        List<User> users = readAll();
+        for (User u : users) {
+            if (u.getUserName().equals(userName)) return Optional.of(u);
+        }
+        return Optional.empty();
     }
 
     public Optional<User> checkLogin(String userName, String password) {
-
-        return null;
+        List<User> users = readAll();
+        for (User u : users) {
+            if (u.getUserName().equals(userName) && u.getPassword().equals(password)) return Optional.of(u);
+        }
+        return Optional.empty();
     }
 }

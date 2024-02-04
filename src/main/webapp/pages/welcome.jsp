@@ -9,6 +9,10 @@
 <body>
 <div class="container">
 	<jsp:directive.include file="/fragments/header.jsp" />
+	<div class='row'>&nbsp;</div>
+	<h1 class='text-center'>Welcome to the Points of Interest WebSite!</h1>
+	<div class='row'>&nbsp;</div>
+	<h2 class='text-center'>Please login to access content!</h2>
 	<jsp:directive.include file="/fragments/footer.jsp" />
 </div>	
 </body>

@@ -7,6 +7,10 @@ public enum Role {
 
     public final String label;
 
+    public String getLabel() {
+        return label;
+    }
+
     Role(String label) {
         this.label = label;
     }

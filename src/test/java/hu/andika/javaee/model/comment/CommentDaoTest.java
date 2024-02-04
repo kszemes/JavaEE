@@ -39,6 +39,9 @@ public class CommentDaoTest {
     @Order(3)
     public void readAllTest(){
         List<Comment> comments = commentDao.readAll();
+        for (Comment comment1 : comments) {
+            System.out.println(comment1);
+        }
         assertFalse(comments.isEmpty());
     }
 
@@ -60,6 +63,14 @@ public class CommentDaoTest {
         Optional<Comment> comment = commentDao.readById(id);
         assertFalse(comment.isPresent());
     }
+
+    @Test
+        @Order(6)
+        public void readAllByUserIdTest(){
+            Integer id = 1;
+            List<Comment> commentsByUserId = commentDao.readAllByUserId(id);
+            assertEquals(2, commentsByUserId.size());
+        }
 
     @AfterAll
     public static void tearDown() {

@@ -8,43 +8,33 @@
 <body>
 <div class="container">
 	<jsp:directive.include file="/fragments/header.jsp" />
-	
 	<div class="row">&nbsp;</div>
-	
-	<div class="row">		
-		<div class="col text-center"><h2>Login Page</h2></div>
+	<div class="row">
+		<div class="col text-center"><h2>Login</h2></div>
 	</div>
-	
 	<div class="row">&nbsp;</div>
-
 	<c:if test="${message != null}">
 		<div class="row">		
 			<div class="col text-center"><h4 class="message">${message}</h4></div>
 		</div>
 	</c:if>
-		
 	<form action="login" method="post" style="max-width: 400px; margin: 0 auto;">
-		<div class="border border-secondary rounded p-3">
-			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">Username:</label>
-				<div class="col-sm-8">
-					<input type="text" name="userName" class="form-control" required minlength="5" maxlength="64">
-				</div>
+		<div class="border border-2 border-secondary rounded p-4">
+			<div class="input-group input-group-lg">
+				<span class="input-group-text" >Username:</span>
+				<input type="text" name="userName" class="form-control" required>
 			</div>
-			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">Password:</label>
-				<div class="col-sm-8">
-					<input type="password" name="password" class="form-control" required minlength="5" maxlength="16">
-				</div>
-			</div>		
+			<div class="input-group input-group-lg">
+				<span class="input-group-text" >Password:</span>
+				<input type="text" name="password" class="form-control" required>
+			</div>
 			<div class="row">
-				<div class="col text-center">
+				<div class="col text-center mt-4">
 					<button type="submit" class="btn btn-primary">Login</button>
 				</div>
 			</div>
 		</div>
 	</form>
-	
 	<jsp:directive.include file="/fragments/footer.jsp" />
 </div>	
 </body>
