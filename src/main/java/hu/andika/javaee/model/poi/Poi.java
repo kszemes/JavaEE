@@ -11,6 +11,13 @@ public class Poi {
 
     }
 
+    public Poi(String name, String location, String type) {
+        this.name = name;
+        this.location = location;
+        this.type = type;
+        this.likes = 0;
+    }
+
     public Poi(String name, String location, String type, int likes) {
         this.name = name;
         this.location = location;

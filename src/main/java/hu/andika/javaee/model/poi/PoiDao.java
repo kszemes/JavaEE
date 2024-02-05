@@ -6,9 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PoiDao {
 
@@ -23,7 +21,7 @@ public class PoiDao {
 
     public static Logger logger = LogManager.getLogger();
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         return connection;
     }
 
@@ -142,5 +140,83 @@ public class PoiDao {
         } catch (SQLException e) {
             logger.catching(Level.ERROR, e);
         }
+    }
+
+    public Set<String> getLocations() {
+        Set<String> locations = new HashSet<>();
+        try (PreparedStatement pst = getConnection().prepareStatement("select location from poi group by location order by location")) {
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                locations.add(resultSet.getString("location"));
+            }
+        } catch (SQLException e) {
+            logger.catching(Level.ERROR, e);
+        }
+        logger.info("Found " + locations.size() + " pieces of locations.");
+        return locations;
+    }
+
+    public Set<String> getTypes() {
+        Set<String> types = new HashSet<>();
+        try (PreparedStatement pst = getConnection().prepareStatement("select type from poi group by type order by type")) {
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                types.add(resultSet.getString("type"));
+            }
+        } catch (SQLException e) {
+            logger.catching(Level.ERROR, e);
+        }
+        logger.info("Found " + types.size() + " pieces of types.");
+        return types;
+    }
+
+    public List<Poi> getPoisByLocation(String location) {
+        List<Poi> pois = new ArrayList<>();
+        try (PreparedStatement pst = getConnection().prepareStatement("select * from main.poi where location like ?")) {
+            pst.setString(1, "%" + location + "%");
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                pois.add(
+                    new Poi(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("location"),
+                        resultSet.getString("type"),
+                        resultSet.getInt("likes")
+                    )
+                );
+            }
+            logger.info("Found " + pois.size() + " Pois from database by location: " + location);
+            return pois;
+        } catch (Exception e) {
+            logger.error("Exception is: " + e);
+            logger.error("There is no Pois in the table with location: " + location);
+        }
+        return pois;
+    }
+
+    public List<Poi> getPoisByType(String type) {
+        List<Poi> pois = new ArrayList<>();
+        try (PreparedStatement pst = getConnection().prepareStatement("select * from main.poi where type like ?")) {
+            pst.setString(1, "%" + type + "%");
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                pois.add(
+                    new Poi(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("type"),
+                        resultSet.getString("type"),
+                        resultSet.getInt("likes")
+                    )
+                );
+            }
+            logger.info("Found " + pois.size() + " Pois from database by type: " + type);
+            return pois;
+        } catch (Exception e) {
+            logger.error("Exception is: " + e);
+            logger.error("There is no Pois in the table with type: " + type);
+        }
+        return pois;
     }
 }

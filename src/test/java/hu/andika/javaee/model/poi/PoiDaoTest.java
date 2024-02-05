@@ -61,6 +61,24 @@ public class PoiDaoTest {
         assertFalse(poi.isPresent());
     }
 
+    @Test
+    @Order(6)
+    public void getPoisByLocationTest(){
+        String location = "London";
+        List<Poi> pois = poidao.getPoisByLocation(location);
+        pois.forEach(System.out::println);
+        assertEquals(4, pois.size());
+    }
+
+    @Test
+    @Order(7)
+    public void getPoisByTypeTest(){
+        String type = "Historic";
+        List<Poi> pois = poidao.getPoisByType(type);
+        pois.forEach(System.out::println);
+        assertEquals(4, pois.size());
+    }
+
     @AfterAll
     public static void tearDown() {
         try {

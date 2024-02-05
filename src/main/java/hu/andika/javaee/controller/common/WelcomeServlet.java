@@ -1,4 +1,4 @@
-package hu.andika.javaee.controller;
+package hu.andika.javaee.controller.common;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -9,17 +9,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/admin/")
-public class AdminServlet extends HttpServlet {
+@WebServlet("")
+public class WelcomeServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
+	public WelcomeServlet() {
+		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String homepage = "index.jsp";
+		String homepage = "pages/welcome.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(homepage);
 		dispatcher.forward(request, response);
 	}

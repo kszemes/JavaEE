@@ -1,5 +1,4 @@
-package hu.andika.javaee.controller.poi;
-
+package hu.andika.javaee.controller.admin.poi;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

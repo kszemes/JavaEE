@@ -1,4 +1,4 @@
-package hu.andika.javaee.controller;
+package hu.andika.javaee.controller.common;
 
 import hu.andika.javaee.model.user.UserServices;
 import jakarta.servlet.ServletException;

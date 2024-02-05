@@ -35,7 +35,6 @@
                     <input type="text" name="password" size="20" value="${user.password}" class="form-control" required/>
                 </div>
             </div>
-            <div>${roleList}</div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Role:</label>
                 <select name="role" class="col-sm-8" required>

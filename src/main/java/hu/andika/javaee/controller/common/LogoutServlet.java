@@ -1,4 +1,4 @@
-package hu.andika.javaee.controller;
+package hu.andika.javaee.controller.common;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

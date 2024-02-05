@@ -1,20 +1,21 @@
-package hu.andika.javaee.controller.user;
+package hu.andika.javaee.controller.index.poi;
 
-import hu.andika.javaee.model.user.UserServices;
+import hu.andika.javaee.model.poi.PoiService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
-@WebServlet("/admin/edit_user")
-public class EditUserServlet extends HttpServlet {
+@WebServlet("/index/list_pois")
+public class ListPoisServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserServices userServices = new UserServices(request, response);
-		userServices.editUser();
+		PoiService poiService = new PoiService(request, response);
+		poiService.listPois(null);
 	}
 
 }

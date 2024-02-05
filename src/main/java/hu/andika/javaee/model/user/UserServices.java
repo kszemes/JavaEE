@@ -57,13 +57,19 @@ public class UserServices {
 	public void createUser() throws ServletException, IOException {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
+		String roleLabel = request.getParameter("role");
+		Role role = Role.REGULARUSER;
+		for (Enum<Role> r : Role.values()) {
+			Role rr = Role.valueOf(r.toString());
+			if (rr.getLabel().equals(roleLabel)) role = rr;
+		}
 		Optional<User> existUser = userDAO.findByUserName(userName);
 		if (existUser.isPresent()) {
 			String message = "Could not create user. A user with name " + userName + " already exists";
 			request.setAttribute("message", message);
 			listUser(message);
 		} else {		
-			User newUser = new User(userName, password, Role.REGULARUSER);
+			User newUser = new User(userName, password, role);
 			userDAO.create(newUser);
 			String message = newUser.getUserName() + " has been created successfully";
 			request.setAttribute("message", message);
@@ -84,7 +90,7 @@ public class UserServices {
 	}
 
 	public void updateUser() throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+		Integer userId = Integer.parseInt(request.getParameter("id"));
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		String roleLabel = request.getParameter("role");
@@ -94,12 +100,12 @@ public class UserServices {
 			if (rr.getLabel().equals(roleLabel)) role = rr;
 		}
 		Optional<User> userByName = userDAO.findByUserName(userName);
-		if (userByName.isPresent() && userByName.get().getId() != id) {
+		if (userByName.isPresent() && !Objects.equals(userByName.get().getId(), userId)) {
 			String message = "Could not update user. User with name " + userName + " already exists.";
 			request.setAttribute("message", message);
 			listUser(message);
 		} else {
-			User user = new User(id, userName, password, role);
+			User user = new User(userId, userName, password, role);
 			userDAO.update(user);
 			String message = user.getUserName() + " has been updated successfully";
 			request.setAttribute("message", message);
@@ -108,7 +114,7 @@ public class UserServices {
 	}
 
 	public void deleteUser() throws ServletException, IOException {
-		int userId = Integer.parseInt(request.getParameter("id"));
+		Integer userId = Integer.parseInt(request.getParameter("id"));
 
 		for (Comment comment : commentDao.readAllByUserId(userId)) {
 			commentDao.deleteById(comment.getId());

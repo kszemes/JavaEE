@@ -1,7 +1,6 @@
-package hu.andika.javaee.controller.user;
+package hu.andika.javaee.controller.index.poi;
 
-
-import hu.andika.javaee.model.user.UserServices;
+import hu.andika.javaee.model.poi.PoiService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,13 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/admin/list_users")
-public class ListUsersServlet extends HttpServlet {
+@WebServlet("/index/list_pois_by_location")
+public class ListPoisByLocationServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserServices userServices = new UserServices(request, response);
-		userServices.listUser();
+		PoiService poiService = new PoiService(request, response);
+		poiService.listPoisByLocation();
 	}
 
 }
