@@ -4,5 +4,5 @@
     <a href="${pageContext.request.contextPath}/index/list_pois" class="nav-link">Pois</a>
 </li>
 <li class="nav-item">
-    <a href="${pageContext.request.contextPath}/index/my_comments" class="nav-link">My Comments</a>
+    <a href="${pageContext.request.contextPath}/index/list_comments" class="nav-link">My Comments</a>
 </li>

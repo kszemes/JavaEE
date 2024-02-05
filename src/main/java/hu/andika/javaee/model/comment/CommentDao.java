@@ -24,7 +24,7 @@ public class CommentDao {
 
     public static Logger logger = LogManager.getLogger();
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         return connection;
     }
 
@@ -91,13 +91,13 @@ public class CommentDao {
             ResultSet resultSet = pst.executeQuery();
             while (resultSet.next()) {
                 comments.add(
-                    new Comment(
-                        resultSet.getInt("id"),
-                        resultSet.getString("content"),
-                        resultSet.getInt("userId"),
-                        resultSet.getInt("pointOfInterestId"),
-                        Boolean.parseBoolean(resultSet.getString("isAuthorized"))
-                    )
+                        new Comment(
+                                resultSet.getInt("id"),
+                                resultSet.getString("content"),
+                                resultSet.getInt("userId"),
+                                resultSet.getInt("pointOfInterestId"),
+                                Boolean.parseBoolean(resultSet.getString("isAuthorized"))
+                        )
                 );
             }
             logger.info("Found " + comments.size() + " Comments from database");
@@ -120,15 +120,15 @@ public class CommentDao {
             ResultSet resultSet = pst.executeQuery();
             while (resultSet.next()) {
                 comments.add(
-                    new CommentDto(
-                        resultSet.getInt("id"),
-                        resultSet.getString("content"),
-                        resultSet.getInt("userId"),
-                        resultSet.getString("userName"),
-                        resultSet.getInt("pointOfInterestId"),
-                        resultSet.getString("name"),
-                        Boolean.parseBoolean(resultSet.getString("isAuthorized"))
-                    )
+                        new CommentDto(
+                                resultSet.getInt("id"),
+                                resultSet.getString("content"),
+                                resultSet.getInt("userId"),
+                                resultSet.getString("userName"),
+                                resultSet.getInt("pointOfInterestId"),
+                                resultSet.getString("name"),
+                                Boolean.parseBoolean(resultSet.getString("isAuthorized"))
+                        )
                 );
             }
             logger.info("Found " + comments.size() + " Comments from database to be Authorized.");
@@ -139,7 +139,71 @@ public class CommentDao {
         return comments;
     }
 
-        public List<Comment> readAllByUserId(Integer userId) {
+    public List<CommentDto> readAllCommentsByUserId(Integer userId) {
+        List<CommentDto> comments = null;
+        try (PreparedStatement pst = getConnection().prepareStatement(
+                "select c.id, c.content, c.userId, u.userName, c.pointOfInterestId, p.name, c.isAuthorized " +
+                        "from comment as c " +
+                        "left join user u on u.id = c.userId " +
+                        "left join poi p on c.pointOfInterestId = p.id " +
+                        "where u.id = ?")) {
+            comments = new ArrayList<>();
+            pst.setInt(1, userId);
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                comments.add(
+                        new CommentDto(
+                                resultSet.getInt("id"),
+                                resultSet.getString("content"),
+                                resultSet.getInt("userId"),
+                                resultSet.getString("userName"),
+                                resultSet.getInt("pointOfInterestId"),
+                                resultSet.getString("name"),
+                                Boolean.parseBoolean(resultSet.getString("isAuthorized"))
+                        )
+                );
+            }
+            logger.info("Found " + comments.size() + " Comments from database by userId: " + userId);
+            return comments;
+        } catch (Exception e) {
+            logger.error("There is no Comments in the table by userId: " + userId);
+        }
+        return comments;
+    }
+
+    public List<CommentDto> readAllCommentsByPoiId(Integer poiId) {
+        List<CommentDto> comments = null;
+        try (PreparedStatement pst = getConnection().prepareStatement(
+                "select c.id, c.content, c.userId, u.userName, c.pointOfInterestId, p.name, c.isAuthorized " +
+                        "from comment as c " +
+                        "left join user u on u.id = c.userId " +
+                        "left join poi p on c.pointOfInterestId = p.id " +
+                        "where p.id = ?")) {
+            comments = new ArrayList<>();
+            pst.setInt(1, poiId);
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                comments.add(
+                        new CommentDto(
+                                resultSet.getInt("id"),
+                                resultSet.getString("content"),
+                                resultSet.getInt("userId"),
+                                resultSet.getString("userName"),
+                                resultSet.getInt("pointOfInterestId"),
+                                resultSet.getString("name"),
+                                Boolean.parseBoolean(resultSet.getString("isAuthorized"))
+                        )
+                );
+            }
+            logger.info("Found " + comments.size() + " Comments from database by poiId: " + poiId);
+            return comments;
+        } catch (Exception e) {
+            logger.error("There is no Comments in the table by poiId: " + poiId);
+        }
+        return comments;
+    }
+
+    public List<Comment> readAllByUserId(Integer userId) {
         List<Comment> comments = null;
         try (PreparedStatement pst = getConnection().prepareStatement("SELECT * FROM comment where userId = ?")) {
             pst.setInt(1, userId);
@@ -147,13 +211,13 @@ public class CommentDao {
             ResultSet resultSet = pst.executeQuery();
             while (resultSet.next()) {
                 comments.add(
-                    new Comment(
-                        resultSet.getInt("id"),
-                        resultSet.getString("content"),
-                        resultSet.getInt("userId"),
-                        resultSet.getInt("pointOfInterestId"),
-                        Boolean.parseBoolean(resultSet.getString("isAuthorized"))
-                    )
+                        new Comment(
+                                resultSet.getInt("id"),
+                                resultSet.getString("content"),
+                                resultSet.getInt("userId"),
+                                resultSet.getInt("pointOfInterestId"),
+                                Boolean.parseBoolean(resultSet.getString("isAuthorized"))
+                        )
                 );
             }
             logger.info("Found " + comments.size() + " Comments from database");
@@ -172,13 +236,13 @@ public class CommentDao {
             ResultSet resultSet = pst.executeQuery();
             while (resultSet.next()) {
                 comments.add(
-                    new Comment(
-                        resultSet.getInt("id"),
-                        resultSet.getString("content"),
-                        resultSet.getInt("userId"),
-                        resultSet.getInt("pointOfInterestId"),
-                        Boolean.parseBoolean(resultSet.getString("isAuthorized"))
-                    )
+                        new Comment(
+                                resultSet.getInt("id"),
+                                resultSet.getString("content"),
+                                resultSet.getInt("userId"),
+                                resultSet.getInt("pointOfInterestId"),
+                                Boolean.parseBoolean(resultSet.getString("isAuthorized"))
+                        )
                 );
             }
             logger.info("Found " + comments.size() + " Comments from database");

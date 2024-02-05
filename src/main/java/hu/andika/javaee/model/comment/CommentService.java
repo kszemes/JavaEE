@@ -1,5 +1,7 @@
 package hu.andika.javaee.model.comment;
 
+import hu.andika.javaee.model.poi.Poi;
+import hu.andika.javaee.model.user.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +21,35 @@ public class CommentService {
         this.request = request;
         this.response = response;
         this.commentDao = new CommentDao();
+    }
+
+    private Integer getLoggedInUserId(){
+        Optional<User> user = (Optional<User>) request.getSession().getAttribute("loggedInUser");
+        return user.get().getId();
+    }
+
+    public void listCommentsByUser(String message) throws ServletException, IOException {
+        Integer userId = getLoggedInUserId();
+        List<CommentDto> commentDtos = commentDao.readAllCommentsByUserId(userId);
+        request.setAttribute("comments", commentDtos);
+        if (message != null) {
+            request.setAttribute("message", message);
+        }
+        String listPage = "comment_list.jsp";
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
+        requestDispatcher.forward(request, response);
+    }
+
+    public void listCommentsByPoiId(String message) throws ServletException, IOException {
+        Integer poiId = Integer.valueOf(request.getParameter("poiId"));
+        List<CommentDto> commentDtos = commentDao.readAllCommentsByPoiId(poiId);
+        request.setAttribute("comments", commentDtos);
+        if (message != null) {
+            request.setAttribute("message", message);
+        }
+        String listPage = "comment_list.jsp";
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
+        requestDispatcher.forward(request, response);
     }
 
     public void listCommentsToBeApproved(String message) throws ServletException, IOException {
@@ -54,4 +85,27 @@ public class CommentService {
         }
     }
 
+    public void showNewCommentForm() throws ServletException, IOException {
+        String newCommentPage = "comment_form.jsp";
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(newCommentPage);
+        requestDispatcher.forward(request, response);
+    }
+
+    public void createComment() throws ServletException, IOException {
+        String message;
+        Integer poiId = Integer.valueOf(request.getParameter("poiId"));
+        Integer userId = getLoggedInUserId();
+        String content = request.getParameter("content");
+        Comment comment = new Comment(content, userId, poiId, false);
+        System.out.println(comment);
+        try {
+            commentDao.create(comment);
+            message = "Comment has been created successfully with id: " + comment.getId();
+            request.setAttribute("message", message);
+            listCommentsByUser(message);
+        } catch (Exception e) {
+            message = e.getMessage();
+            listCommentsByUser(message);
+        }
+    }
 }

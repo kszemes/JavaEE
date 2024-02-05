@@ -86,20 +86,14 @@
                     <td>${poi.type}</td>
                     <td>${poi.likes}</td>
                     <td>
-                        <row class='d-flex'>
+                        <div class='d-flex'>
                             <form method="post" action="like_poi?id=${poi.id}">
                                 <input type="hidden" name="id" value="${poi.id}">
                                 <button class='btn btn-danger' href="like_poi?id=${poi.id}">Like</button> &nbsp;
                             </form>
-                            <form method="post" action="add_comment?=id" class='me-2'>
-                                <input type="hidden" name="id" value="${poi.id}">
-                                <button class='btn btn-warning' type="submit">Add comment</button>
-                            </form>
-                            <form method="post" action="view_comment?=id">
-                                <input type="hidden" name="id" value="${poi.id}">
-                                <button class='btn btn-info' type="submit">View comment</button>
-                            </form>
-                        </row>
+                            <a href='add_comment?poiId=${poi.id}' class="btn btn-warning me-2">Add comment</a>
+                            <a href='view_comments?poiId=${poi.id}' class="btn btn-info">View comments</a>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

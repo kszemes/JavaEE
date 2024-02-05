@@ -9,7 +9,10 @@
 <body>
 <div class="container">
 	<jsp:directive.include file="/fragments/header.jsp" />
-	<div>Hello User!</div>
+	<div class="row">&nbsp;</div>
+	<h2 class='text-center'>Hello ${userName}!</h2>
+	<div class="row">&nbsp;</div>
+	<h2 class='text-center'>Select command from menubar!</h2>
 	<jsp:directive.include file="/fragments/footer.jsp" />
 </div>	
 </body>
